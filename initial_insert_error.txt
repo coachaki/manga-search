@@ -1,0 +1,20 @@
+﻿failed to do query INSERT INTO manga_index (title, completed, last_updated, table_name) VALUES ('Hell's Kitchen', 'No', '2013-05-14 19:08:25', 'Hell_s_Kitchen')
+failed to do query CREATE TABLE Real(filename VARCHAR(256), volume VARCHAR(8), filepath TEXT, size INT, date_added DATETIME) COLLATE utf8_general_ci
+failed to do query INSERT INTO Real (filename, volume, filepath, size, date_added) VALUES ("[Raw-Manga] Real_v01", 1, "/manga/Real/[Raw-Manga] Real_v01.zip", 63545313, '2012-01-13 03:47:26')
+failed to do query INSERT INTO Real (filename, volume, filepath, size, date_added) VALUES ("[Raw-Manga] Real_v02", 2, "/manga/Real/[Raw-Manga] Real_v02.zip", 54934533, '2012-01-13 03:49:04')
+failed to do query INSERT INTO Real (filename, volume, filepath, size, date_added) VALUES ("[Raw-Manga] Real_v03", 3, "/manga/Real/[Raw-Manga] Real_v03.zip", 52481233, '2012-01-13 04:02:01')
+failed to do query INSERT INTO Real (filename, volume, filepath, size, date_added) VALUES ("[Raw-Manga] Real_v04", 4, "/manga/Real/[Raw-Manga] Real_v04.zip", 63734105, '2012-01-13 03:53:49')
+failed to do query INSERT INTO Real (filename, volume, filepath, size, date_added) VALUES ("[Raw-Manga] Real_v05", 5, "/manga/Real/[Raw-Manga] Real_v05.zip", 40225544, '2012-01-13 03:58:43')
+failed to do query INSERT INTO Real (filename, volume, filepath, size, date_added) VALUES ("[Raw-Manga] Real_v06", 6, "/manga/Real/[Raw-Manga] Real_v06.zip", 58127709, '2012-01-13 04:03:20')
+failed to do query INSERT INTO Real (filename, volume, filepath, size, date_added) VALUES ("[Raw-Manga] Real_v07", 7, "/manga/Real/[Raw-Manga] Real_v07.zip", 65677667, '2012-01-13 04:04:28')
+failed to do query INSERT INTO Real (filename, volume, filepath, size, date_added) VALUES ("[Raw-Manga] Real_v08", 8, "/manga/Real/[Raw-Manga] Real_v08.zip", 59195591, '2012-01-13 04:52:19')
+failed to do query INSERT INTO Real (filename, volume, filepath, size, date_added) VALUES ("[Raw-Manga] Real_v09", 9, "/manga/Real/[Raw-Manga] Real_v09.zip", 61296660, '2012-01-13 04:27:31')
+failed to do query INSERT INTO Real (filename, volume, filepath, size, date_added) VALUES ("[Raw-Manga] Real_v10", 10, "/manga/Real/[Raw-Manga] Real_v10.zip", 69112346, '2012-01-13 04:06:45')
+failed to do query INSERT INTO Real (filename, volume, filepath, size, date_added) VALUES ("[Raw-Manga] Real_v11", 11, "/manga/Real/[Raw-Manga] Real_v11.zip", 93788130, '2012-01-13 04:08:23')
+failed to do query INSERT INTO Real (filename, volume, filepath, size, date_added) VALUES ("[Raw-Manga] Real_v12", 12, "/manga/Real/[Raw-Manga] Real_v12.zip", 72512215, '2012-12-01 11:33:05')
+failed to do query CREATE TABLE Saijou_no_Meii_~The_King_of_NEET~(filename VARCHAR(256), volume VARCHAR(8), filepath TEXT, size INT, date_added DATETIME) COLLATE utf8_general_ci
+failed to do query INSERT INTO Saijou_no_Meii_~The_King_of_NEET~ (filename, volume, filepath, size, date_added) VALUES ("Saijou_no_Meii_-_The_King_of_Neet_v01", 1, "/manga/Saijou no Meii ~The King of NEET~/Saijou_no_Meii_-_The_King_of_Neet_v01.zip", 71028749, '2011-10-03 18:26:00')
+failed to do query INSERT INTO Saijou_no_Meii_~The_King_of_NEET~ (filename, volume, filepath, size, date_added) VALUES ("Saijou_no_Meii_-_The_King_of_Neet_v02", 2, "/manga/Saijou no Meii ~The King of NEET~/Saijou_no_Meii_-_The_King_of_Neet_v02.zip", 62322118, '2011-10-03 18:20:39')
+failed to do query INSERT INTO Saijou_no_Meii_~The_King_of_NEET~ (filename, volume, filepath, size, date_added) VALUES ("Saijou_no_Meii_-_The_King_of_Neet_v03", 3, "/manga/Saijou no Meii ~The King of NEET~/Saijou_no_Meii_-_The_King_of_Neet_v03.zip", 81925916, '2011-10-03 18:23:48')
+failed to do query INSERT INTO manga_index (title, completed, last_updated, table_name) VALUES ('I'll', 'Yes', '2013-05-14 20:03:09', 'I_ll')
+done
