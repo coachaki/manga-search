@@ -4,17 +4,6 @@ include('/sudo-root/database.php');
 include('mangalist.php');
 ini_set('max_execution_time', 0);
 
-function insert_manga($manga_path) {
-
-	$d = @dir($manga_path) or die ("insert_manga: failed to open $manga_path for reading");
-
-	$manga = array(
-		"title" = mb_convert_encoding(
-	);
-
-	list_files($manga_path);
-}
-
 $manga_list = list_dirs("/manga/");
 for ($i = count($manga_list) - 1; $i >= 0; --$i) {
 	if ($manga_list[$i]["title"][0] == "!") {
