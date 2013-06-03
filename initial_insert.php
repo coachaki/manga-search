@@ -39,7 +39,7 @@ $manga_list = array_merge($manga_list, $complete_list);
 //echo "<pre>", print_r($manga_list), "</pre>";
 //echo count($manga_list);
 
-$manga_db = mysqli_connect("$host", "$user", "$pass", "manga_db") or die('Error connecting to MySQL server.');
+// $manga_db = mysqli_connect("$host", "$user", "$pass", "manga_db") or die('Error connecting to MySQL server.');
 
 $sql = "CREATE TABLE IF NOT EXISTS info_manga_table (
 	title TEXT,
@@ -55,7 +55,8 @@ if (!mysqli_query($manga_db,$sql))
 foreach($manga_list as $series) {
 	$dirdate = date("Y-m-d H:i:s", $series["last_updated"]);
 	$sql = "INSERT INTO info_manga_table (title, completed, last_updated, table_name)
-		VALUES ('{$series["title"]}', '{$series["completed"]}', '$dirdate', '{$series["table_name"]}')";
+		VALUES (\"{$series["title"]}\", '{$series["completed"]}', '$dirdate', '{$series["table_name"]}')
+		ON DUPLICATE KEY UPDATE title=\"{$series["title"]}\", completed='{$series["completed"]}'";
 	if (!mysqli_query($manga_db,$sql))
 		echo "failed to do query $sql<br>";
 
@@ -73,8 +74,15 @@ foreach($manga_list as $series) {
 
 	foreach($series["files"] as $volume) {
 		$date = date("Y-m-d H:i:s", $volume["last_updated"]);
-		$sql = "INSERT INTO {$series["table_name"]} (filename, volume, filepath, size, last_updated)
-			VALUES (\"{$volume["name"]}\", {$volume["vol"]}, \"{$volume["path"]}\", {$volume["size"]}, '$date')";
+		if ($volume["vol"] == NULL) {
+			$sql = "SELECT * FROM {$series["table_name"]} WHERE filename LIKE \"%{$volume["name"]}%\"";
+			$result = mysqli_query($manga_db,$sql);
+		}
+		$sql = "INSERT INTO {$series["table_name"]}
+			(filename, volume, filepath, size, last_updated)
+			VALUES
+			(\"{$volume["name"]}\", {$volume["vol"]}, \"{$volume["path"]}\", {$volume["size"]}, '$date')
+			ON DUPLICATE KEY UPDATE filename=\"{$volume["name"]}\", filepath=\"{$volume["path"]}\", size={$volume["size"]}, last_updated='$date'";
 		if (!mysqli_query($manga_db,$sql))
 			echo "failed to do query $sql<br>";
 	}
