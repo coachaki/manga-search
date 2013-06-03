@@ -14,11 +14,13 @@ function list_dirs($dir) {
 
 		if (is_dir("$dir$entry")) {
 			$parent = dirname("$dir$entry");
+			$table_name = str_replace(array("[","]","(",")","!","?","%","^","~"),"",str_replace(array(" ",".","'","&","-"),"_",mb_convert_encoding("$entry", "UTF-8", "SJIS")));
+			$table_name = "manga_".$table_name;
 			$dirlist[] = array(
 				"title" => mb_convert_encoding("$entry", "UTF-8", "SJIS"),
 				"path" => mb_convert_encoding("$parent/$entry/", "UTF-8", "SJIS"),
-				"table_name" => str_replace(array("[","]","(",")","!","?","%","^","~"),"",str_replace(array(" ",".","'","&","-"),"_",mb_convert_encoding("$entry", "UTF-8", "SJIS"))),
-				"lastmod" => filemtime("$dir$entry"),
+				"table_name" => $table_name,
+				"last_updated" => filemtime("$dir$entry"),
 			);
 		}
 	}
@@ -53,7 +55,7 @@ function list_files($dir) {
 					"vol" => "NULL",
 					// "type" => filetype("$dir$entry"),
 					"size" => filesize("$dir$entry"),
-					"lastmod" => filemtime("$dir$entry"),
+					"last_updated" => filemtime("$dir$entry"),
 				);
 			}
 			else {
@@ -63,7 +65,7 @@ function list_files($dir) {
 					"vol" => int($match[0]),
 					// "type" => filetype("$dir$entry"),
 					"size" => filesize("$dir$entry"),
-					"lastmod" => filemtime("$dir$entry"),
+					"last_updated" => filemtime("$dir$entry"),
 				);
 			}
 		}
@@ -74,45 +76,61 @@ function list_files($dir) {
 	return $filelist;
 }
 
-function sql_insert_series($db, $series) {
-	$dirdate = date("Y-m-d H:i:s", $series["lastmod"]);
-	$sql = "INSERT INTO manga_index (title, completed, last_updated, table_name)
-		VALUES ('{$series["title"]}', '{$series["completed"]}', '$dirdate', '{$series["table_name"]}')";
-	if (!mysqli_query($db, $sql))
-		echo "failed to do insertion: $sql<br>";
-}
-
-function sql_create_series($db, $series) {
-	$sql = "CREATE TABLE {$series["table_name"]}(filename VARCHAR(256), volume VARCHAR(8), filepath TEXT, size INT, date_added DATETIME) COLLATE utf8_general_ci";
-	if (!mysqli_query($db, $sql))
-		echo "failed to do creation: $sql<br>";
-}
-
-function sql_insert_volume($db, $volume) {
-		$date = date("Y-m-d H:i:s", $volume["lastmod"]);
-		return "INSERT INTO {$series["table_name"]} (filename, volume, filepath, size, date_added)
-			VALUES (\"{$volume["name"]}\", {$volume["vol"]}, \"{$volume["path"]}\", {$volume["size"]}, '$date')";
-		if (!mysqli_query($db, $sql))
-			echo "failed to do insertion: $sql<br>";
-}
-
 function get_manga($manga_path) {
 
-	$d = @dir($manga_path) or die ("insert_manga: failed to open $manga_path for reading");
+	$d = @dir($manga_path) or die ("get_manga: failed to open $manga_path for reading");
 
 	$entry = basename("$manga_path");
 	$parent = dirname("$manga_path");
 
+	$table_name = str_replace(array("[","]","(",")","!","?","%","^","~"),"",str_replace(array(" ",".","'","&","-"),"_",mb_convert_encoding("$entry", "UTF-8", "SJIS")));
+	$table_name = "manga_".$table_name;
 	$manga = array(
 		"title" => mb_convert_encoding("$entry", "UTF-8", "SJIS"),
 		"path" => mb_convert_encoding("$parent/$entry/", "UTF-8", "SJIS"),
-		"table_name" => str_replace(array("[","]","(",")","!","?","%","^"),"",str_replace(array(" ",".","'","&","-"),"_",mb_convert_encoding("$entry", "UTF-8", "SJIS"))),
-		"lastmod" => filemtime("$manga_path"),
+		"table_name" => $table_name,
+		"last_updated" => filemtime("$manga_path"),
 	);
 
 	$manga["files"] = list_files($manga_path);
 
 	return $manga;
+}
+
+function sql_insert_series($db, $series) {
+	$dirdate = date("Y-m-d H:i:s", $series["last_updated"]);
+	$sql = "INSERT INTO info_manga_table (title, completed, last_updated, table_name)
+		VALUES (\"{$series["title"]}\", \"{$series["completed"]}\", \"$dirdate\", \"{$series["table_name"]}\")";
+	if (!mysqli_query($db, $sql))
+		echo "failed to do insertion: $sql<br>";
+
+	sql_create_series($db, $series);
+	foreach($series["files"] as $volume)
+		sql_insert_volume($db, $volume, $series["table_name"]);
+}
+
+function sql_create_series($db, $series) {
+	$sql = "CREATE TABLE {$series["table_name"]}(
+		filename VARCHAR(256),
+		volume VARCHAR(8),
+		filepath TEXT,
+		size INT,
+		date_added DATETIME,
+		PRIMARY KEY (volume)
+	) COLLATE utf8_general_ci";
+	if (!mysqli_query($db, $sql))
+		echo "failed to do creation: $sql<br>";
+
+	foreach($series["files"] as $volume)
+		sql_insert_volume($db, $volume, $series["table_name"]);
+}
+
+function sql_insert_volume($db, $volume, $table) {
+		$date = date("Y-m-d H:i:s", $volume["last_updated"]);
+		$sql = "INSERT INTO $table (filename, volume, filepath, size, date_added)
+			VALUES (\"{$volume["name"]}\", {$volume["vol"]}, \"{$volume["path"]}\", {$volume["size"]}, '$date')";
+		if (!mysqli_query($db, $sql))
+			echo "failed to do insertion: $sql<br>";
 }
 
 ?>

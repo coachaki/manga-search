@@ -1,6 +1,7 @@
 <?php 
 
-include('/sudo-root/database.php');
+date_default_timezone_set("America/Los_Angeles");
+include('../sudo-root/database.php');
 include('mangalist.php');
 ini_set('max_execution_time', 0);
 
@@ -38,22 +39,41 @@ $manga_list = array_merge($manga_list, $complete_list);
 //echo "<pre>", print_r($manga_list), "</pre>";
 //echo count($manga_list);
 
-//$manga_db = mysqli_connect("$host", "$user", "$pass", "manga_db") or die('Error connecting to MySQL server.');
+$manga_db = mysqli_connect("$host", "$user", "$pass", "manga_db") or die('Error connecting to MySQL server.');
+
+$sql = "CREATE TABLE IF NOT EXISTS info_manga_table (
+	title TEXT,
+	author TEXT,
+	completed ENUM('yes','no'),
+	last_updated DATE,
+	table_name VARCHAR(255) NOT NULL,
+	PRIMARY KEY (table_name)
+) COLLATE utf8_general_ci";
+if (!mysqli_query($manga_db,$sql))
+	echo "failed to do query $sql<br>";
 
 foreach($manga_list as $series) {
-	$dirdate = date("Y-m-d H:i:s", $series["lastmod"]);
-	$sql = "INSERT INTO manga_index (title, completed, last_updated, table_name)
+	$dirdate = date("Y-m-d H:i:s", $series["last_updated"]);
+	$sql = "INSERT INTO info_manga_table (title, completed, last_updated, table_name)
 		VALUES ('{$series["title"]}', '{$series["completed"]}', '$dirdate', '{$series["table_name"]}')";
 	if (!mysqli_query($manga_db,$sql))
 		echo "failed to do query $sql<br>";
 
-	$sql = "CREATE TABLE {$series["table_name"]}(filename VARCHAR(256), volume VARCHAR(8), filepath TEXT, size INT, date_added DATETIME) COLLATE utf8_general_ci";
+	$sql = "CREATE TABLE IF NOT EXISTS {$series["table_name"]}(
+		filename VARCHAR(255),
+		volume INT AUTO_INCREMENT,
+		filepath TEXT,
+		size INT,
+		last_updated DATETIME,
+		PRIMARY KEY (volume)
+	) COLLATE utf8_general_ci
+	AUTO_INCREMENT = 1000";
 	if (!mysqli_query($manga_db,$sql))
 		echo "failed to do query $sql<br>";
 
 	foreach($series["files"] as $volume) {
-		$date = date("Y-m-d H:i:s", $volume["lastmod"]);
-		$sql = "INSERT INTO {$series["table_name"]} (filename, volume, filepath, size, date_added)
+		$date = date("Y-m-d H:i:s", $volume["last_updated"]);
+		$sql = "INSERT INTO {$series["table_name"]} (filename, volume, filepath, size, last_updated)
 			VALUES (\"{$volume["name"]}\", {$volume["vol"]}, \"{$volume["path"]}\", {$volume["size"]}, '$date')";
 		if (!mysqli_query($manga_db,$sql))
 			echo "failed to do query $sql<br>";
@@ -63,13 +83,11 @@ foreach($manga_list as $series) {
 /*
 while ($row = mysqli_fetch_array($result)) {
 	$filesize = number_format(($row["size"] * .0009765625) * .0009765625, 2);
-	echo "<a href=\"{$row["filepath"]}\">" . $row["filename"] . "</a> volume: " . $row["volume"] . "date modified: {$row["date_added"]}, size: $filesize MB<br>";
+	echo "<a href=\"{$row["filepath"]}\">" . $row["filename"] . "</a> volume: " . $row["volume"] . "date modified: {$row["last_updated"]}, size: $filesize MB<br>";
 }
  */
-// mysqli_close($manga_db);
+mysqli_close($manga_db);
 
 echo "done";
-
-
 
 ?>
