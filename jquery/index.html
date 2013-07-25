@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="omijikan.css">
+		<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+		<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+		<title>Omijikan Library</title>
+	</head>
+	<body>
+		<div id="header">
+			<form id="search_form">
+				<input id="search_field" type="text" autofocus placeholder="keyword search">
+				<input id="search_button" type="submit" value="search">
+			</form>
+		</div>
+		<nav>
+		<form id="navbar">
+			<input type="radio" name="navlink" id="link1" checked="checked"><label for="link1">home</label>
+			<input type="radio" name="navlink" id="link2"><label for="link2">manga</label>
+			<input type="radio" name="navlink" id="link3"><label for="link3">weeklies</label>
+			<input type="radio" name="navlink" id="link4"><label for="link4">novel</label>
+			<input type="radio" name="navlink" id="link5"><label for="link5">font</label>
+		</form>
+		</nav>
+		<script lang="JavaScript">
+			$("#navbar").buttonset();
+		</script>
+	</body>
+</html>

@@ -1,0 +1,23 @@
+html
+{
+	background-color: #333;
+	color: #ccc;
+	font-family: Helvetica, Calibri, Arial, sans-serif;
+	height: 100%;
+}
+
+ul
+{
+	list-style-type: none;
+	padding: 0px;
+	margin: 0px;
+}
+
+a
+{
+	color: inherit;
+}
+
+a:hover {
+	text-decoration: none;
+}

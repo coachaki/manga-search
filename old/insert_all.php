@@ -1,7 +1,7 @@
 <?php 
 
 date_default_timezone_set("America/Los_Angeles");
-include('../sudo-root/database.php');
+include('../../sudo-root/database.php');
 include('mangalist.php');
 ini_set('max_execution_time', 0);
 
@@ -12,6 +12,9 @@ for ($i = count($manga_list) - 1; $i >= 0; --$i) {
 			unset($manga_list[$i]);
 		}
 		elseif ($dir_name == "!!How_to_Read!!") {
+			unset($manga_list[$i]);
+		}
+		elseif ($dir_name == "!!new!!") {
 			unset($manga_list[$i]);
 		}
 		elseif ($dir_name == "!COMPLETE!") {
@@ -39,11 +42,12 @@ $manga_list = array_merge($manga_list, $complete_list);
 //echo "<pre>", print_r($manga_list), "</pre>";
 //echo count($manga_list);
 
-// $manga_db = mysqli_connect("$host", "$user", "$pass", "manga_db") or die('Error connecting to MySQL server.');
+$manga_db = mysqli_connect("$host", "$user", "$pass", "manga_db") or die('Error connecting to MySQL server.');
 
 $sql = "CREATE TABLE IF NOT EXISTS info_manga_table (
 	title TEXT,
 	author TEXT,
+	path TEXT,
 	completed ENUM('yes','no'),
 	last_updated DATE,
 	table_name VARCHAR(255) NOT NULL,
@@ -54,9 +58,9 @@ if (!mysqli_query($manga_db,$sql))
 
 foreach($manga_list as $series) {
 	$dirdate = date("Y-m-d H:i:s", $series["last_updated"]);
-	$sql = "INSERT INTO info_manga_table (title, completed, last_updated, table_name)
-		VALUES (\"{$series["title"]}\", '{$series["completed"]}', '$dirdate', '{$series["table_name"]}')
-		ON DUPLICATE KEY UPDATE title=\"{$series["title"]}\", completed='{$series["completed"]}'";
+	$sql = "INSERT INTO info_manga_table (title, path, completed, last_updated, table_name)
+		VALUES (\"{$series["title"]}\", \"{$series["path"]}\", '{$series["completed"]}', '$dirdate', '{$series["table_name"]}')
+		ON DUPLICATE KEY UPDATE title=\"{$series["title"]}\", path=\"{$series["path"]}\", completed='{$series["completed"]}', last_updated='$dirdate'";
 	if (!mysqli_query($manga_db,$sql))
 		echo "failed to do query $sql<br>";
 
@@ -74,9 +78,12 @@ foreach($manga_list as $series) {
 
 	foreach($series["files"] as $volume) {
 		$date = date("Y-m-d H:i:s", $volume["last_updated"]);
-		if ($volume["vol"] == NULL) {
-			$sql = "SELECT * FROM {$series["table_name"]} WHERE filename LIKE \"%{$volume["name"]}%\"";
+		if (strcmp($volume["vol"],"NULL") == 0) {
+			$sql = "SELECT volume FROM {$series["table_name"]} WHERE filename LIKE \"%{$volume["name"]}%\"";
 			$result = mysqli_query($manga_db,$sql);
+			$row = mysqli_fetch_array($result);
+			if (mysqli_num_rows($result) > 0)
+				$volume["vol"] = $row["volume"];
 		}
 		$sql = "INSERT INTO {$series["table_name"]}
 			(filename, volume, filepath, size, last_updated)

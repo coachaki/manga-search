@@ -3,6 +3,37 @@ html
     background-color: #333;
     color: #ccc;
     font-family: Helvetica, Calibri, Arial, sans-serif;
+	height: 100%;
+}
+
+#navbar_frame
+{
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	height: 40px;
+	width: 100%;
+	border: none;
+}
+
+#sidebar_frame
+{
+	position: fixed;
+	left: 0px;
+	width: 400px;
+	top: 41px;
+	height: 95%;
+	border: none;
+}
+
+#result_frame
+{
+	position: fixed;
+	left: 401px;
+	top: 41px;
+	height: 95%;
+	width: 100%;
+	border: none;
 }
 
 #navbar
@@ -114,7 +145,6 @@ html
 #resultlist
 {
 	border-collapse: collapse;
-	width: 100%;
 }
 
 table tr

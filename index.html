@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Omijikan</title>
+
+		<link rel="stylesheet" type="text/css" href="omijikan.css">
+		<script src="http://yui.yahooapis.com/3.11.0/build/yui/yui-min.js"></script>
+		<!--
+		<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/dark-hive/jquery-ui.css">
+		--!>
+		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+		<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+		<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript">
+			function js_search() {
+				var search_string = document.getElementById("search_field").nodeValue;
+				document.getElementById("page_content").innerHTML = "<p>text changed</p>";
+				/*
+				$.ajax({
+						}).done(function( html ) {
+							});
+							*/
+			}
+		</script>
+	</head>
+	<body>
+		<div id="header">
+			<form id="search_form" name="search_form" > 
+				<input id="search_field" name="search_field" type="text" autofocus placeholder="keyword search">
+				<input id="search_button" name="search_button" type="submit" value="search" onclick="js_search()" >
+			</form>
+		</div>
+		<nav id="navbar">
+		<table>
+			<tr>
+				<td class="js-nav active"><a href="/manga-search/">home</a></td>
+				<td class="js-nav"><a href="manga.html">manga</a></td>
+				<td class="js-nav"><a href="weeklies.html">weeklies</a></td>
+				<td class="js-nav"><a href="novels.html">novels</a></td>
+				<td class="js-nav"><a href="fonts.html">fonts</a></td>
+			</tr>
+		</table>
+		</nav>
+		<div id="page_content">
+				<p>newest release</p>
+		</div>
+	</body>
+</html>

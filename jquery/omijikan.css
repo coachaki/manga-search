@@ -1,0 +1,119 @@
+html
+{
+	background-color: #eee;
+	font-family: Helvetica, Calibri, Arial, sans-serif;
+	font-size: 16px;
+}
+
+/* search ui 
+--------------*/
+
+#header
+{
+	position: absolute;
+	left: 0px; right: 0px;
+	top: 0px;
+	height: 82px;
+	width: 100%;
+	box-shadow: 0px 0px 5px #333;
+}
+
+#search_form
+{
+	position: absolute;
+	left: 0px; right: 0px;
+	top: 50px;
+	height: 25px;
+	text-align: center;
+	font-size: 18px;
+}
+
+#search_field
+{
+	width: 600px;
+	font-size: inherit;
+	background-color: inherit;
+	border: 2px solid #333;
+	color: #333;
+}
+
+#search_button
+{
+	font-size: inherit;
+	background-color: #333;
+	color: #eee;
+	border: 2px solid #333;
+}
+
+#search_button:hover, #search_field:hover
+{
+	box-shadow: 0px 0px 2px #333;
+}
+
+/* navigation links
+--------------------*/
+
+nav
+{
+	background-color: #333;
+	color: #eee;
+}
+
+#navbar
+{
+	position: absolute;
+	margin: 0 auto;
+	left: 0; right: 0;
+	top: 90px;
+	height: 25px;
+	width: 100%;
+	margin-top: 0px;
+	text-align: center;
+}
+
+#navbar table
+{
+	position: absolute;
+	margin: auto;
+	left: 0; right: 0;
+	bottom: 0;
+	vertical-align: center;
+	height: 100%;
+	padding: 0px;
+	border: none;
+	border-collapse: collapse;
+}
+
+#navbar tr
+{
+	height: 100%;
+}
+
+.js-nav
+{
+	padding: 0px 5px 0px;
+}
+
+.js-nav .active a
+{
+	background-color: #999;
+}
+
+.js-nav a
+{
+	font-size: 18px;
+	padding: 2px 10px 2px;
+	text-decoration: none;
+	background-color: #eee;
+	color: #333;
+}
+
+.js-nav a:hover
+{
+	box-shadow: 0px 0px 5px #eee;
+}
+
+a
+{
+	color: #ddd;
+}
