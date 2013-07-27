@@ -10,7 +10,7 @@ $sql =
 	where last_updated between '$two_weeks_ago' and '$tomorrow'
 	order by last_updated desc"; //and last_updated <= $tomorrow";
 $series_result = mysqli_query($manga_db,$sql);
-echo "<table id=\"resultlist\">
+echo "<table class=\"result\" id=\"resultlist\">
 	<tr class=\"label\"><td class=\"series\">series</td><td class=\"title\">files</td><td class=\"size\">size</td></tr>";
 while($series_row = mysqli_fetch_array($series_result)) {
 	$sql = 
