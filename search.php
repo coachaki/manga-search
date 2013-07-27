@@ -9,6 +9,7 @@ if (isset($_POST['submit']) and isset($_GET['title']) and strcmp($title = $_POST
 		$searchterm = str_replace("_", "\\_", $searchterm);
 		$searchterm = str_replace("\"", "\\\"", $searchterm);
 		$searchterm = str_replace("'", "\\'", $searchterm);
+		$searchterm = str_replace("\\", "\\\\", $searchterm);
 
 		$sql = "SELECT table_name, path, title
 			FROM info_manga_table
