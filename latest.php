@@ -11,7 +11,7 @@ $sql =
 	order by last_updated desc"; //and last_updated <= $tomorrow";
 $series_result = mysqli_query($manga_db,$sql);
 echo "<table class=\"result\" id=\"resultlist\">
-	<tr class=\"label\"><td class=\"series\">series</td><td class=\"title\">files</td><td class=\"size\">size</td></tr>";
+	<tr class=\"result label\"><td class=\"result series\">series</td><td class=\"result title\">files</td><td class=\"result size\">size</td></tr>";
 while($series_row = mysqli_fetch_array($series_result)) {
 	$sql = 
 		"select *
@@ -25,9 +25,15 @@ while($series_row = mysqli_fetch_array($series_result)) {
 	while($file_row = mysqli_fetch_array($file_result)) {
 		$recent_files[] = array_merge($file_row,array("series" => $series_row["title"]));
 		if ($i % 2 == 0)
-			echo "<tr class=\"even\"><td class=\"series\"><a href=\"{$series_row["path"]}\">{$series_row["title"]}</a></td><td class=\"title\"><a href=\"{$file_row["filepath"]}\">{$file_row["filename"]}</a></td><td class=\"size\">",number_format($file_row["size"] / 1048576, 2)," MB</td></tr>";
+			echo "<tr class=\"result even\">
+			<td class=\"result series\"><a href=\"{$series_row["path"]}\">{$series_row["title"]}</a></td>
+			<td class=\"result title\"><a href=\"{$file_row["filepath"]}\">{$file_row["filename"]}</a></td>
+			<td class=\"result size\">",number_format($file_row["size"] / 1048576, 2)," MB</td></tr>";
 		else
-			echo "<tr class=\"odd\"><td class=\"series\"><a href=\"{$series_row["path"]}\">{$series_row["title"]}</a></td><td class=\"title\"><a href=\"{$file_row["filepath"]}\">{$file_row["filename"]}</a></td><td class=\"size\">",number_format($file_row["size"] / 1048576, 2)," MB</td></tr>";
+			echo "<tr class=\"result odd\">
+			<td class=\"result series\"><a href=\"{$series_row["path"]}\">{$series_row["title"]}</a></td>
+			<td class=\"result title\"><a href=\"{$file_row["filepath"]}\">{$file_row["filename"]}</a></td>
+			<td class=\"result size\">",number_format($file_row["size"] / 1048576, 2)," MB</td></tr>";
 		$i++;
 	}
 }

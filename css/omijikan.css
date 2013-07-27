@@ -152,7 +152,7 @@ a
 	color: #ccc;
 }
 
-#resultlist tr
+tr.result
 {
 	height: 24px;
 	text-align: left;
@@ -161,37 +161,37 @@ a
 	padding: 5px;
 }
 
-#resultlist td
+td.result
 {
 	padding-left: 4px;
 	white-space: nowrap;
 	width: 1px;
 }
 
-#resultlist tr.even
+tr.even.result
 {
 	margin: 2px;
 	background-color: #2a2a2a;
 	font-size: 15;
 }
 
-#resultlist tr.label
+tr.label.result
 {
 	text-align: center;
 	color: #333;
 	font-size: 18;
 }
 
-#resultlist tr.even a	{	color:inherit;	}
-#resultlist tr.even a:hover	{	text-decoration:none;	}
+tr.even.result a	{	color:inherit;	}
+tr.even.result a:hover	{	text-decoration:none;	}
 
-#resultlist tr.odd
+tr.odd.result
 {
 	margin: 2px;
 	background-color: #3a3a3a;
 	font-size: 15;
 }
-#resultlist tr.odd a	{	color:inherit;	}
-#resultlist tr.odd a:hover	{	text-decoration:none;	}
+tr.odd.result a	{	color:inherit;	}
+tr.odd.reslut a:hover	{	text-decoration:none;	}
 
  */
