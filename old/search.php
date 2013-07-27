@@ -41,7 +41,7 @@
 						echo "<br>";
 					}
 					else 
-						echo "Your search result for: $title did not return anything.<br>";
+						echo "Your search for: $title did not return anything.<br>";
 				}
 			}
 			else {
