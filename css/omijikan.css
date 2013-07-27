@@ -148,6 +148,7 @@ a
 #resultlist
 {
 	border-collapse: collapse;
+	width: 100%;
 }
 
 table tr
