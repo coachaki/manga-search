@@ -23,7 +23,13 @@
 					})
 				}
 				else {
-					content.innerHTML = keyword;
+					$.ajax({
+						type: "POST",
+						url: "search.php",
+						data: {title: keyword}
+					}).done(function( result ) {
+						content.innherHTML=result;
+					})
 				}
 				/*
 				 $.ajax({
