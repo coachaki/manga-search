@@ -148,6 +148,8 @@ a
 #resultlist
 {
 	border-collapse: collapse;
+	width: 100%;
+	color: #ccc;
 }
 
 table tr
@@ -176,6 +178,7 @@ table tr.even
 table tr.label
 {
 	text-align: center;
+	color: #333;
 	font-size: 18;
 }
 
