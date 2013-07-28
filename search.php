@@ -1,8 +1,7 @@
 <?php
 $searchterm = "";
 date_default_timezone_set("America/Los_Angeles");
-if (isset($_POST['submit']) and isset($_GET['title']) and strcmp($title = $_POST['title'],"") != 0) {
-	if (isset($_GET['title'])) {
+if (strcmp($title = $_POST['title'],"") != 0) {
 		$title = $_POST['title'];
 		$manga_db = mysqli_connect("localhost", "manga_search","","manga_db") or die("error connecting to manga database");
 		$searchterm = str_replace("%", "\\%", $title);
@@ -16,9 +15,8 @@ if (isset($_POST['submit']) and isset($_GET['title']) and strcmp($title = $_POST
 			WHERE title LIKE \"%$searchterm%\"";
 		$series_result = mysqli_query($manga_db, $sql);
 		if (mysqli_num_rows($series_result) > 0) {
-			echo "Your search result for: $title<br>";
-			echo "<table id=\"resultlist\">
-				<tr class=\"label\"><td class=\"series\">series</td><td class=\"title\">files</td><td class=\"size\">size</td></tr>";
+			echo "<table class=\"result\" id=\"resultlist\">
+				<tr class=\"result label\"><td class=\"result series\">series</td><td class=\"result title\">files</td><td class=\"result size\">size</td></tr>";
 			$i = 0;
 			while ($series_row = mysqli_fetch_array($series_result)) {
 				$sql = "SELECT *
@@ -26,9 +24,9 @@ if (isset($_POST['submit']) and isset($_GET['title']) and strcmp($title = $_POST
 				$file_result = mysqli_query($manga_db, $sql);
 				while($file_row = mysqli_fetch_array($file_result)) {
 					if ($i % 2 == 0)
-						echo "<tr class=\"even\"><td class=\"series\"><a href=\"{$series_row["path"]}\">{$series_row["title"]}</a></td><td class=\"title\"><a href=\"{$file_row["filepath"]}\">{$file_row["filename"]}</a></td><td class=\"size\">",number_format($file_row["size"] / 1048576, 2)," MB</td></tr>";
+						echo "<tr class=\"result even\"><td class=\"result series\"><a href=\"{$series_row["path"]}\">{$series_row["title"]}</a></td><td class=\"result title\"><a href=\"{$file_row["filepath"]}\">{$file_row["filename"]}</a></td><td class=\"result size\">",number_format($file_row["size"] / 1048576, 2)," MB</td></tr>";
 					else
-						echo "<tr class=\"odd\"><td class=\"series\"><a href=\"{$series_row["path"]}\">{$series_row["title"]}</a></td><td class=\"title\"><a href=\"{$file_row["filepath"]}\">{$file_row["filename"]}</a></td><td class=\"size\">",number_format($file_row["size"] / 1048576, 2)," MB</td></tr>";
+						echo "<tr class=\"result odd\"><td class=\"result series\"><a href=\"{$series_row["path"]}\">{$series_row["title"]}</a></td><td class=\"result title\"><a href=\"{$file_row["filepath"]}\">{$file_row["filename"]}</a></td><td class=\"result size\">",number_format($file_row["size"] / 1048576, 2)," MB</td></tr>";
 					$i++;
 				}
 			}
@@ -36,7 +34,6 @@ if (isset($_POST['submit']) and isset($_GET['title']) and strcmp($title = $_POST
 			echo "<br>";
 		}
 		else 
-			echo "Your search for: $title did not return anything.<br>";
-	}
+			echo "<p>Your search for $title did not return anything.</p>";
 }
 ?>

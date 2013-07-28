@@ -23,12 +23,13 @@
 					})
 				}
 				else {
+					content.innerHTML="<p>searching...</p>";
 					$.ajax({
 						type: "POST",
 						url: "search.php",
 						data: {title: keyword}
 					}).done(function( result ) {
-						content.innherHTML=result;
+						content.innerHTML=result;
 					})
 				}
 				/*
