@@ -16,20 +16,17 @@
 				var content = document.getElementById("page_content");
 				var keyword = document.getElementById("search_field").value;
 				if (keyword == "") {
+					content.innerHTML="<iframe src=\"/manga\" frameborder=\"0\"></iframe>";
+				} else {
+					content.innerHTML = "<p>searching...</p>";
 					$.ajax({
-						url: "latest.php"
-					}).done(function( output ) {
-						content.innerHTML=output;
-					})
-				}
-				else {
-					content.innerHTML="<p>searching...</p>";
-					$.ajax({
-						type: "POST",
-						url: "search.php",
-						data: {title: keyword}
-					}).done(function( result ) {
-						content.innerHTML=result;
+						type : "POST",
+						url : "search.php",
+						data : {
+							title : keyword
+						}
+					}).done(function(result) {
+						content.innerHTML = result;
 					})
 				}
 				/*
