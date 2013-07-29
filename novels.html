@@ -16,11 +16,7 @@
 				var content = document.getElementById("page_content");
 				var keyword = document.getElementById("search_field").value;
 				if (keyword == "") {
-					$.ajax({
-						url: "latest.php"
-					}).done(function( output ) {
-						content.innerHTML=output;
-					})
+					content.innerHTML="<iframe id=\"content_frame\" src=\"/novels\" frameborder=\"0\"></iframe>";
 				}
 				else {
 					content.innerHTML="<p>searching...</p>";

@@ -16,7 +16,7 @@
 				var content = document.getElementById("page_content");
 				var keyword = document.getElementById("search_field").value;
 				if (keyword == "") {
-					content.innerHTML="<iframe src=\"/manga\" frameborder=\"0\"></iframe>";
+					content.innerHTML="<iframe id=\"content_frame\" src=\"/manga\" frameborder=\"0\"></iframe>";
 				} else {
 					content.innerHTML = "<p>searching...</p>";
 					$.ajax({
